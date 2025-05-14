@@ -4,8 +4,10 @@
 #include <string>
 #include <cctype>
 
+// 게임 메뉴 화면 프로토타입
 void mainWindow();
 
+// 입력받기 위한 함수
 void InputValue(std::string& str, bool& PressedKey)
 {
     int key = GetCharPressed();
@@ -28,6 +30,7 @@ void InputValue(std::string& str, bool& PressedKey)
     }
 }
 
+// 게임 메뉴 화면 1 누르면 지뢰찾기, 2 누르면 CatchTheCoin 게임 화며 띄우기
 void mainWindow()
 {
     InitWindow(720, 480, "GknuMiniGame");
@@ -77,8 +80,8 @@ void mainWindow()
         }
         else if (IsKeyPressed(KEY_TWO) || IsKeyPressed(KEY_KP_2))
         {
-            CatchTheCoin();
             CloseWindow();
+            CatchTheCoin();
         }
     }
     CloseWindow();
