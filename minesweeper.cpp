@@ -11,8 +11,8 @@ vector<vector<bool>> check; // 찾은 지뢰를 저장하기 위한 2차원 배열
 vector<int> dx = { -1,0,1,0,-1,-1,1,1 }; 
 vector<int> dy = { 0,-1,0,1,-1,1,-1,1 }; 
 bool flag; // 지뢰를 눌러 게임오버됬음을 알리는 변수 기본값 false
-int MineCount; // 현재 찾은 지뢰 개수
-int Ground; // 현재 안전 지역 개수
+int MineCount; // 현재 남은 지뢰 개수
+int Ground; // 현재 미지 구역 개수
 
 // main.cpp에 있는 함수 프로토타입
 void mainWindow();
@@ -148,7 +148,7 @@ int MineSweeper(int boardLen, int Mines)
         ss << Ground;
         ss >> GCount;
         DrawText(GCount, 30, 5, 50, BLACK);
-        DrawText(MCount, screenWidth - 95, 5, 50, BLACK);
+        DrawText(MCount, screenWidth - 95, 5, 50, RED);
 
         for (int i = 0; i < boardSize; i++)
         {
