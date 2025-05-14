@@ -7,7 +7,7 @@ vector<vector<int>> board;
 vector<vector<bool>> check;
 vector<int> dx = { -1,0,1,0,-1,-1,1,1 };
 vector<int> dy = { 0,-1,0,1,-1,1,-1,1 };
-bool flog = true;
+bool flag;
 int MineCount;
 int Ground;
 
@@ -69,6 +69,7 @@ int MineSweeper(int boardLen, int Mines)
     boardSize = boardLen;
     MineCount = Mines;
     Ground = boardSize * boardSize - MineCount;
+    flag = true;
     board = vector<vector<int>>(boardSize, vector<int>(boardSize, 0));
     check = vector<vector<bool>>(boardSize, vector<bool>(boardSize, false));
     setMine(MineCount);
@@ -81,10 +82,12 @@ int MineSweeper(int boardLen, int Mines)
     char MCount[100] = "";
     char GCount[100] = "";
 
-    while (!WindowShouldClose())
+    bool ReTry = true;
+
+    while (!WindowShouldClose() && ReTry)
     {
         Vector2 mouse = GetMousePosition();
-        if (!(MineCount == 0 && Ground == 0) && flog)
+        if (!(MineCount == 0 && Ground == 0) && flag)
         {
             if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
             {
@@ -93,7 +96,7 @@ int MineSweeper(int boardLen, int Mines)
                 if (mx >= 0 && mx < boardSize && my >= 0 && my < boardSize)
                 {
                     if (!IsSafetyArea(mx, my))
-                        flog = false;
+                        flag = false;
                 }
             }
             else if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
@@ -141,6 +144,7 @@ int MineSweeper(int boardLen, int Mines)
 
 
                 Color color = mouseOver ? BLACK : LIGHTGRAY;
+                color = flag ? color : LIGHTGRAY;
 
                 if (board[i][j] == 2)
                 {
@@ -149,8 +153,20 @@ int MineSweeper(int boardLen, int Mines)
                     DrawRectangle(x, y, cellSize, cellSize, GRAY);
                     DrawText(count, x + 15, y, 40, BLACK);
                 }
-                else if (board[i][j] == 1 && !flog)
+                else if (board[i][j] == 1 && !flag)
+                {
                     DrawRectangle(x, y, cellSize, cellSize, RED);
+                    DrawText("ReTry : R", screenWidth/4 , screenHeight/2-50, 40, GREEN);
+                    DrawText("Exit : ESC", screenWidth / 4, screenHeight/2+50, 40, GREEN);
+                    if (IsKeyPressed(KEY_ESCAPE))
+                        ReTry = false;
+                    else if (IsKeyPressed(KEY_R))
+                    {
+                        EndDrawing();
+                        CloseWindow();
+                        MineSweeper(boardLen, Mines);
+                    }
+                }
                 else if (board[i][j] == 1 && MineCount == 0 && Ground == 0)
                     DrawRectangle(x, y, cellSize, cellSize, GREEN);
                 else if (check[i][j] == true)

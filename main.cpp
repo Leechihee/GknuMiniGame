@@ -2,29 +2,29 @@
 #include "catchthecoin.h"
 #include "raylib.h"
 #include <string>
+#include <cctype>
 
+void mainWindow();
 
-std::string InputValue()
+void InputValue(std::string& str, bool& PressedKey)
 {
-
-    std::string temp;
     int key = GetCharPressed();
     while (key > 0)
     {
-        if (key >= '0' && key <= '9')
-            temp += (char)key;
+        if (std::isdigit(key))
+            str += (char)key;
         key = GetCharPressed();
     }
 
-    if (IsKeyPressed(KEY_BACKSPACE))
-        if (!temp.empty()) temp.pop_back();
+    if (IsKeyPressed(KEY_BACKSPACE) && !str.empty())
+        str.pop_back();
 
-    if (IsKeyPressed(KEY_ENTER))
+    if (IsKeyPressed(KEY_ENTER) && !str.empty())
+        PressedKey = true;
+    if (IsKeyPressed(KEY_ESCAPE))
     {
-        if (!temp.empty())
-        {
-            return temp;
-        }
+        CloseWindow();
+        mainWindow();
     }
 }
 
@@ -32,40 +32,55 @@ void mainWindow()
 {
     InitWindow(720, 480, "GknuMiniGame");
     SetTargetFPS(60);
-    bool flag = true;
-    while (!WindowShouldClose()) {
-        if (flag)
+    while (!WindowShouldClose())
+    {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+        DrawText("GknuMiniGame", 27, 50, 100, BLACK);
+        DrawText("1.  MineSweeper", 50, 240, 50, BLACK);
+        DrawText("2. CatchTheCoin", 50, 320, 50, BLACK);
+        EndDrawing();
+
+        if (IsKeyPressed(KEY_ONE) || IsKeyPressed(KEY_KP_1))
         {
-            BeginDrawing();
-            ClearBackground(RAYWHITE);
-
-            DrawText("GknuMiniGame", 27, 50, 100, BLACK);
-            DrawText("1.  MineSweeper", 50, 240, 50, BLACK);
-            DrawText("2. CatchTheCoin", 50, 320, 50, BLACK);
-            EndDrawing();
-
-            if (IsKeyPressed(KEY_ONE) || IsKeyPressed(KEY_KP_1))
+            std::string boardWidth = "";
+            bool PressedEnter = false;
+            while (!PressedEnter && !WindowShouldClose())
             {
-                flag = false;
                 BeginDrawing();
                 ClearBackground(RAYWHITE);
                 DrawText("MineSweeper Setting", 40, 40, 40, BLACK);
                 DrawText("Input BoardWidth : ", 40, 120, 30, BLACK);
-                std::string boardWidth = InputValue();
+                DrawText(boardWidth.c_str(), 400, 120, 30, BLUE);
+                EndDrawing();
+                InputValue(boardWidth,PressedEnter);
+            }
+
+            PressedEnter = false;
+            std::string Mines = "";
+            while (!PressedEnter && !WindowShouldClose())
+            {
+                BeginDrawing();
+                ClearBackground(RAYWHITE);
+                DrawText("MineSweeper Setting", 40, 40, 40, BLACK);
+                DrawText("Input BoardWidth : ", 40, 120, 30, BLACK);
                 DrawText(boardWidth.c_str(), 400, 120, 30, BLUE);
                 DrawText("Input Mine Count : ", 40, 200, 30, BLACK);
-                std::string Mines = InputValue();
-                DrawText(Mines.c_str(), 500, 200, 30, BLUE);
+                DrawText(Mines.c_str(), 400, 200, 30, BLUE);
                 EndDrawing();
+                InputValue(Mines, PressedEnter);
             }
-            else if (IsKeyPressed(KEY_TWO) || IsKeyPressed(KEY_KP_2))
-            {
-                CatchTheCoin();
-                CloseWindow();
-            }
+
+            CloseWindow();
+            MineSweeper(stoi(boardWidth),stoi(Mines));
+        }
+        else if (IsKeyPressed(KEY_TWO) || IsKeyPressed(KEY_KP_2))
+        {
+            CatchTheCoin();
+            CloseWindow();
         }
     }
-
     CloseWindow();
 }
 
