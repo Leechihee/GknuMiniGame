@@ -1,3 +1,4 @@
+# GknuMiniGame.sln으로 들어가서 빌드하기!!!!!!!!
 # 실행 화면
 ## 메인 메뉴
 ![image](https://github.com/user-attachments/assets/717fbb3b-3d6a-46e6-b569-2369b6fd6fd4)
