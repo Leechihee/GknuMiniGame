@@ -1,15 +1,17 @@
+# GknuMiniGame.sln으로 들어가서 빌드하기!!!!!!!!
 # 실행 화면
 ## 메인 메뉴
 ![image](https://github.com/user-attachments/assets/717fbb3b-3d6a-46e6-b569-2369b6fd6fd4)
 ##### 소스코드 
 https://github.com/Leechihee/GknuMiniGame/blob/master/main.cpp
 ### 지뢰찾기 설정
-![image](https://github.com/user-attachments/assets/f4f75da1-ff85-4d43-b342-2a17245d9d37)
+![image](https://github.com/user-attachments/assets/a16cf9bb-1fd5-4bcc-b352-6acb398a9ae4)
 #### 지뢰찾기
-![image](https://github.com/user-attachments/assets/bd8712b0-5c38-4e97-8c2f-62f6780ca630)
-![image](https://github.com/user-attachments/assets/a26437ff-6f4a-4c83-be9a-e3bbede9a73d)
-![image](https://github.com/user-attachments/assets/aa75801f-cf3b-4b94-9c20-4dd72e769945)
-![image](https://github.com/user-attachments/assets/0871a620-3116-4c34-8d1b-e81f8da6f32f)
+![image](https://github.com/user-attachments/assets/1964da6f-903f-49c1-997f-c2b1e33a974f)
+![image](https://github.com/user-attachments/assets/a0dedc0b-d935-40cb-a370-7204eb6a76d8)
+![image](https://github.com/user-attachments/assets/97bf6034-6ba4-4de9-bd25-918c4a2fbff3)
+![image](https://github.com/user-attachments/assets/d232bd9c-8786-490b-9b84-deda97981fca)
+![image](https://github.com/user-attachments/assets/a6d5cd15-ac56-45c3-863c-3975ad9c1a71)
 ###### 소스코드
 [minesweeper.cpp](https://github.com/Leechihee/GknuMiniGame/blob/master/minesweeper.cpp)
 ### CatchTheCoin 메인 화면
@@ -73,3 +75,4 @@ https://github.com/Leechihee/GknuMiniGame/blob/master/catchthecoin.cpp
 이번 팀플을 통해 다양한 경험들을 할 수 있게 되어 좋은 경험이 되었다.**
 
 ## 20250673 성유현
+c언어로 raylib를 사용해서 블록깨기 게임을 만들 때는 구현하고 싶은것은 많았지만 한계가 있었습니다. 하지만 cpp을 사용해서 클래스를 만들어 사용해 코인에 훨씬 다양한 능력들을 넣을 수 있었습니다. 처음 c언어와 cpp을 배울때는 기존 문법에도 어려움을 겪어 raylib의 문법이 많이 어색했지만 팀프로젝트를 하며 raylib의 문법에 이해하고 cpp의 클래스 사용에 조금은 더 가까워질 수 있었습니다. 아직은 어렵고 숙련되었다고 표현할 수는 없겠지만 조금은 cpp에 대한 이해도가 생김을 확인할 수 있는 경험이 되었습니다.
