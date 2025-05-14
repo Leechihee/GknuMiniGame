@@ -1,8 +1,3 @@
-# 시나리오
-# 소감
-## 20220938 이치희
-## 20240950 이윤재
-## 20250673 성유현
 # 실행 화면
 ## 메인 메뉴
 ![image](https://github.com/user-attachments/assets/717fbb3b-3d6a-46e6-b569-2369b6fd6fd4)
@@ -17,3 +12,8 @@
 ![image](https://github.com/user-attachments/assets/1eb49b92-70f5-4f84-a0a6-7e7b344366b1)
 #### CatchTheCoin 실행
 ![image](https://github.com/user-attachments/assets/4dd9b306-8fc9-48a6-811f-6345a62d7d06)
+# 시나리오
+# 소감
+## 20220938 이치희
+## 20240950 이윤재
+## 20250673 성유현
