@@ -128,7 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="catchthecoincpp.cpp" />
+    <ClCompile Include="catchthecoin.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="minesweeper.cpp" />
   </ItemGroup>

@@ -21,7 +21,7 @@
     <ClCompile Include="minesweeper.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="catchthecoincpp.cpp">
+    <ClCompile Include="catchthecoin.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
