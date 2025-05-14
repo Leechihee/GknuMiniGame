@@ -4,7 +4,7 @@
 ##### 소스코드 
 https://github.com/Leechihee/GknuMiniGame/blob/master/main.cpp
 ### 지뢰찾기 설정
-![image](https://github.com/user-attachments/assets/f4f75da1-ff85-4d43-b342-2a17245d9d37)
+![image](https://github.com/user-attachments/assets/a16cf9bb-1fd5-4bcc-b352-6acb398a9ae4)
 #### 지뢰찾기
 ![image](https://github.com/user-attachments/assets/1964da6f-903f-49c1-997f-c2b1e33a974f)
 ![image](https://github.com/user-attachments/assets/a0dedc0b-d935-40cb-a370-7204eb6a76d8)
