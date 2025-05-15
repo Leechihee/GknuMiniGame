@@ -5,7 +5,7 @@
 ### 지뢰찾기 설정
 ![image](https://github.com/user-attachments/assets/c8a86cac-0f4b-42b1-ac10-ed2cc5b417d3)
 ##### 메인 메뉴소스코드 
-https://github.com/Leechihee/GknuMiniGame/blob/master/main.cpp
+main.cpp
 #### 지뢰찾기
 ![image](https://github.com/user-attachments/assets/1964da6f-903f-49c1-997f-c2b1e33a974f)
 ![image](https://github.com/user-attachments/assets/a0dedc0b-d935-40cb-a370-7204eb6a76d8)
@@ -20,7 +20,7 @@ https://github.com/Leechihee/GknuMiniGame/blob/master/main.cpp
 ![image](https://github.com/user-attachments/assets/4dd9b306-8fc9-48a6-811f-6345a62d7d06)
 ![image](https://github.com/user-attachments/assets/18358376-72c7-4648-8256-ab1ed3818748)
 ##### CatchTheCoin 소스코드
-https://github.com/Leechihee/GknuMiniGame/blob/master/catchthecoin.cpp
+catchthecoin.cpp
 # 시나리오
 **1. 기획 의도  
 이 프로그램은 누구나 쉽게 즐길 수 있는 두 가지 미니게임을 하나의 플랫폼에서 선택하여 플레이할 수 있도록 제작된 C++ 기반의 그래픽 게임 모음입니다. 사용자에게는 다양한 게임을 제공함으로써 재미와 몰입도를 높이고 개발자에게는 c++과 그래픽스 프로그래밍을 학습하는 데 목적이 있습니다.**
