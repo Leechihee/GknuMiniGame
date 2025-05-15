@@ -35,14 +35,18 @@ void mainWindow()
 {
     InitWindow(720, 480, "GknuMiniGame");
     SetTargetFPS(60);
+
+    Color BackgroundColor = BLACK;
+    Color TextColor = LIGHTGRAY;
+
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(BLACK);
+        ClearBackground(BackgroundColor);
 
-        DrawText("GknuMiniGame", 27, 50, 100, LIGHTGRAY);
-        DrawText("1.  MineSweeper", 50, 240, 50, LIGHTGRAY);
-        DrawText("2. CatchTheCoin", 50, 320, 50, LIGHTGRAY);
+        DrawText("GknuMiniGame", 27, 50, 100, TextColor);
+        DrawText("1.  MineSweeper", 50, 240, 50, TextColor);
+        DrawText("2. CatchTheCoin", 50, 320, 50, TextColor);
         EndDrawing();
 
         if (IsKeyPressed(KEY_ONE) || IsKeyPressed(KEY_KP_1))
@@ -52,9 +56,9 @@ void mainWindow()
             while (!PressedEnter && !WindowShouldClose())
             {
                 BeginDrawing();
-                ClearBackground(RAYWHITE);
-                DrawText("MineSweeper Setting", 40, 40, 40, BLACK);
-                DrawText("Input BoardWidth : ", 40, 120, 30, BLACK);
+                ClearBackground(BackgroundColor);
+                DrawText("MineSweeper Setting", 40, 40, 40, TextColor);
+                DrawText("Input BoardWidth : ", 40, 120, 30, TextColor);
                 DrawText(boardWidth.c_str(), 400, 120, 30, BLUE);
                 EndDrawing();
                 InputValue(boardWidth,PressedEnter);
@@ -65,11 +69,11 @@ void mainWindow()
             while (!PressedEnter && !WindowShouldClose())
             {
                 BeginDrawing();
-                ClearBackground(RAYWHITE);
-                DrawText("MineSweeper Setting", 40, 40, 40, BLACK);
-                DrawText("Input BoardWidth : ", 40, 120, 30, BLACK);
+                ClearBackground(BackgroundColor);
+                DrawText("MineSweeper Setting", 40, 40, 40, TextColor);
+                DrawText("Input BoardWidth : ", 40, 120, 30, TextColor);
                 DrawText(boardWidth.c_str(), 400, 120, 30, BLUE);
-                DrawText("Input Mine Count : ", 40, 200, 30, BLACK);
+                DrawText("Input Mine Count : ", 40, 200, 30, TextColor);
                 DrawText(Mines.c_str(), 400, 200, 30, BLUE);
                 EndDrawing();
                 InputValue(Mines, PressedEnter);
