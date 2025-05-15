@@ -1,7 +1,7 @@
 # GknuMiniGame.sln으로 들어가서 빌드하기!!!!!!!!
 # 실행 화면
 ## 메인 메뉴
-![image](https://github.com/user-attachments/assets/717fbb3b-3d6a-46e6-b569-2369b6fd6fd4)
+![image](https://github.com/user-attachments/assets/9a44f036-45d1-46b6-8828-faf04092bfe3)
 ##### 소스코드 
 https://github.com/Leechihee/GknuMiniGame/blob/master/main.cpp
 ### 지뢰찾기 설정
