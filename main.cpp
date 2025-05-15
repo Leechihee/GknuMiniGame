@@ -38,11 +38,11 @@ void mainWindow()
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
 
-        DrawText("GknuMiniGame", 27, 50, 100, BLACK);
-        DrawText("1.  MineSweeper", 50, 240, 50, BLACK);
-        DrawText("2. CatchTheCoin", 50, 320, 50, BLACK);
+        DrawText("GknuMiniGame", 27, 50, 100, LIGHTGRAY);
+        DrawText("1.  MineSweeper", 50, 240, 50, LIGHTGRAY);
+        DrawText("2. CatchTheCoin", 50, 320, 50, LIGHTGRAY);
         EndDrawing();
 
         if (IsKeyPressed(KEY_ONE) || IsKeyPressed(KEY_KP_1))
