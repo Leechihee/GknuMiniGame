@@ -8,7 +8,7 @@
 void mainWindow();
 
 // 입력받기 위한 함수
-void InputValue(std::string& str, bool& PressedKey)
+void InputValue(std::string& str, bool& PressedEnter, bool& PressedESC)
 {
     int key = GetCharPressed();
     while (key > 0)
@@ -22,24 +22,24 @@ void InputValue(std::string& str, bool& PressedKey)
         str.pop_back();
 
     if (IsKeyPressed(KEY_ENTER) && !str.empty())
-        PressedKey = true;
+        PressedEnter = true;
     if (IsKeyPressed(KEY_ESCAPE))
-    {
-        CloseWindow();
-        mainWindow();
-    }
+        PressedESC = true;
 }
 
 // 게임 메뉴 화면 1 누르면 지뢰찾기, 2 누르면 CatchTheCoin 게임 화며 띄우기
 void mainWindow()
 {
     InitWindow(720, 480, "GknuMiniGame");
+    SetExitKey(0); // ESC로 창을 지우지 않게 하기 위한 함수
     SetTargetFPS(60);
 
     Color BackgroundColor = BLACK;
     Color TextColor = LIGHTGRAY;
 
-    while (!WindowShouldClose())
+    bool loop = true;
+
+    while (!WindowShouldClose() && loop)
     {
         BeginDrawing();
         ClearBackground(BackgroundColor);
@@ -52,8 +52,9 @@ void mainWindow()
         if (IsKeyPressed(KEY_ONE) || IsKeyPressed(KEY_KP_1))
         {
             std::string boardWidth = "";
-            bool PressedEnter = false;
-            while (!PressedEnter && !WindowShouldClose())
+            bool pressedEnter = false;
+            bool pressedESC = false;
+            while (!pressedEnter && !pressedESC && !WindowShouldClose())
             {
                 BeginDrawing();
                 ClearBackground(BackgroundColor);
@@ -61,12 +62,14 @@ void mainWindow()
                 DrawText("Input BoardWidth : ", 40, 120, 30, TextColor);
                 DrawText(boardWidth.c_str(), 400, 120, 30, BLUE);
                 EndDrawing();
-                InputValue(boardWidth,PressedEnter);
+                InputValue(boardWidth, pressedEnter, pressedESC);
             }
 
-            PressedEnter = false;
+            if (pressedESC) continue;
+
+            pressedEnter = false;
             std::string Mines = "";
-            while (!PressedEnter && !WindowShouldClose())
+            while (!pressedESC && !pressedEnter && !WindowShouldClose())
             {
                 BeginDrawing();
                 ClearBackground(BackgroundColor);
@@ -76,17 +79,21 @@ void mainWindow()
                 DrawText("Input Mine Count : ", 40, 200, 30, TextColor);
                 DrawText(Mines.c_str(), 400, 200, 30, BLUE);
                 EndDrawing();
-                InputValue(Mines, PressedEnter);
+                InputValue(Mines, pressedEnter, pressedESC);
             }
 
+            if (pressedESC) continue;
+
             CloseWindow();
-            MineSweeper(stoi(boardWidth),stoi(Mines));
+            MineSweeper(stoi(boardWidth), stoi(Mines));
         }
         else if (IsKeyPressed(KEY_TWO) || IsKeyPressed(KEY_KP_2))
         {
             CloseWindow();
             CatchTheCoin();
         }
+        else if (IsKeyPressed(KEY_ESCAPE))
+            loop = false;
     }
     CloseWindow();
 }
