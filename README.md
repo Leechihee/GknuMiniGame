@@ -77,3 +77,5 @@
 **c언어로 raylib를 사용해서 블록깨기 게임을 만들 때는 구현하고 싶은것은 많았지만 한계가 있었습니다. 하지만 cpp을 사용해서 클래스를 만들어 사용해 코인에 훨씬 다양한 능력들을 넣을 수 있었습니다.  
 처음 c언어와 cpp을 배울때는 기존 문법에도 어려움을 겪어 raylib의 문법이 많이 어색했지만 팀프로젝트를 하며 raylib의 문법에 이해하고 cpp의 클래스 사용에 조금은 더 가까워질 수 있었습니다.  
 아직은 어렵고 숙련되었다고 표현할 수는 없겠지만 조금은 cpp에 대한 이해도가 생김을 확인할 수 있는 경험이 되었습니다.**
+
+LMS : https://lms.andong.ac.kr/ilos/st/course/project_team_detail_view_form.acl?PROJECT_SEQ=3500561&TEAM_CD=36974&SHARE_YN=N&MY_TEAM_CD=36974&display=1&start=1&week=
