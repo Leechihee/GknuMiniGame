@@ -18,6 +18,20 @@ int Ground; // 현재 미지 구역 개수
 void mainWindow();
 
 // 게임 시작할때 지뢰설정
+//void setMine(int Mine)
+//{
+//    srand(time(0));
+//    int seccSetMine = 0;
+//    while (seccSetMine != Mine)
+//    {
+//        int x = rand() % boardSize; int y = rand() % boardSize;
+//        if (board[x][y] == 1)
+//            continue;
+//        board[x][y] = 1;
+//        seccSetMine++;
+//    }
+//}
+
 void setMine(int Mine)
 {
     srand(time(0));
@@ -32,7 +46,7 @@ void setMine(int Mine)
     }
 }
 
-// DFS 기반 알고리즘으로 한번 눌렀을 때 안전구역을 다 탐색하여 한번에 열리도록 하기
+// DFS 기반 알고리즘으로 한번 눌렀을 때 연결되어있는 안전구역을 다 탐색하여 한번에 열리도록 하기
 // 만약 처음 탐색한 구역이 지뢰였다면 false 리턴, 아니라면 true 리턴
 bool IsSafetyArea(int curX, int curY)
 {
@@ -104,7 +118,7 @@ int MineSweeper(int boardLen, int Mines)
         // 게임이 승리로 끝나지 않았을 때
         if (!(MineCount == 0 && Ground == 0) && flag)
         {
-            // 왼쪽버튼을 누르면 해당 구역이 안전구역인지 확인하는 조건문
+            // 마우스 왼쪽버튼을 누르면 해당 구역이 안전구역인지 확인하는 조건문
             if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
             {
                 int mx = mouse.x / cellSize;
@@ -115,7 +129,7 @@ int MineSweeper(int boardLen, int Mines)
                         flag = false; // 게임 패배
                 }
             }
-            // 오른쪽 클릭을 한다면 해당 구역에 !가 있다면 없애고 없다면 생기게 하는 조건문
+            // 오른쪽 오른쪽 클릭을 한다면 해당 구역에 !가 있다면 없애고 없다면 생기게 하는 조건문
             else if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
             {
                 int mx = mouse.x / cellSize;
