@@ -2,36 +2,22 @@
 
 using namespace std;
 
-// ¸Å°³º¯¼öµéÀ» ÁÙÀÌ±â À§ÇÑ Àü¿ªº¯¼öµé
-int boardSize; // Áö·ÚÃ£±âº¸µå ÇÑº¯ÀÇ ±æÀÌ
-vector<vector<int>> board; // Áö·ÚÃ£±âº¸µå (2Â÷¿ø¹è¿­)
-// 0 = ¹ÌÁö±¸¿ª , 1 = Áö·Ú , 2 = ¾ÈÀü±¸¿ª
-vector<vector<bool>> check; // Ã£Àº Áö·Ú¸¦ ÀúÀåÇÏ±â À§ÇÑ 2Â÷¿ø ¹è¿­
-// DFS »ç¿ëÇÏ±â À§ÇÑ 1Â÷¿ø¹è¿­µé
+// ë§¤ê°œë³€ìˆ˜ë“¤ì„ ì¤„ì´ê¸° ìœ„í•œ ì „ì—­ë³€ìˆ˜ë“¤
+int boardSize; // ì§€ë¢°ì°¾ê¸°ë³´ë“œ í•œë³€ì˜ ê¸¸ì´
+vector<vector<int>> board; // ì§€ë¢°ì°¾ê¸°ë³´ë“œ (2ì°¨ì›ë°°ì—´)
+// 0 = ë¯¸ì§€êµ¬ì—­ , 1 = ì§€ë¢° , 2 = ì•ˆì „êµ¬ì—­
+vector<vector<bool>> check; // ì°¾ì€ ì§€ë¢°ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ 2ì°¨ì› ë°°ì—´
+// DFS ì‚¬ìš©í•˜ê¸° ìœ„í•œ 1ì°¨ì›ë°°ì—´ë“¤
 vector<int> dx = { -1,0,1,0,-1,-1,1,1 }; 
 vector<int> dy = { 0,-1,0,1,-1,1,-1,1 }; 
-bool flag; // Áö·Ú¸¦ ´­·¯ °ÔÀÓ¿À¹ö‰çÀ½À» ¾Ë¸®´Â º¯¼ö ±âº»°ª false
-int MineCount; // ÇöÀç ³²Àº Áö·Ú °³¼ö
-int Ground; // ÇöÀç ¹ÌÁö ±¸¿ª °³¼ö
+bool flag; // ì§€ë¢°ë¥¼ ëˆŒëŸ¬ ê²Œì„ì˜¤ë²„ë¥¼ ì•Œë¦¬ëŠ” ë³€ìˆ˜ ê¸°ë³¸ê°’ false
+int MineCount; // í˜„ì¬ ë‚¨ì€ ì§€ë¢° ê°œìˆ˜
+int Ground; // í˜„ì¬ ë¯¸ì§€ êµ¬ì—­ ê°œìˆ˜
 
-// main.cpp¿¡ ÀÖ´Â ÇÔ¼ö ÇÁ·ÎÅäÅ¸ÀÔ
+// main.cppì— ìˆëŠ” í•¨ìˆ˜ í”„ë¡œí† íƒ€ì…
 void mainWindow();
 
-// °ÔÀÓ ½ÃÀÛÇÒ¶§ Áö·Ú¼³Á¤
-//void setMine(int Mine)
-//{
-//    srand(time(0));
-//    int seccSetMine = 0;
-//    while (seccSetMine != Mine)
-//    {
-//        int x = rand() % boardSize; int y = rand() % boardSize;
-//        if (board[x][y] == 1)
-//            continue;
-//        board[x][y] = 1;
-//        seccSetMine++;
-//    }
-//}
-
+// ê²Œì„ ì‹œì‘í• ë•Œ ì§€ë¢°ì„¤ì •
 void setMine(int Mine)
 {
     srand(time(0));
@@ -46,8 +32,8 @@ void setMine(int Mine)
     }
 }
 
-// DFS ±â¹İ ¾Ë°í¸®ÁòÀ¸·Î ÇÑ¹ø ´­·¶À» ¶§ ¿¬°áµÇ¾îÀÖ´Â ¾ÈÀü±¸¿ªÀ» ´Ù Å½»öÇÏ¿© ÇÑ¹ø¿¡ ¿­¸®µµ·Ï ÇÏ±â
-// ¸¸¾à Ã³À½ Å½»öÇÑ ±¸¿ªÀÌ Áö·Ú¿´´Ù¸é false ¸®ÅÏ, ¾Æ´Ï¶ó¸é true ¸®ÅÏ
+// DFS ê¸°ë°˜ ì•Œê³ ë¦¬ì¦˜ìœ¼ë¡œ í•œë²ˆ ëˆŒë €ì„ ë•Œ ì—°ê²°ë˜ì–´ìˆëŠ” ì•ˆì „êµ¬ì—­ì„ ë‹¤ íƒìƒ‰í•˜ì—¬ í•œë²ˆì— ì—´ë¦¬ë„ë¡ í•˜ê¸°
+// ë§Œì•½ ì²˜ìŒ íƒìƒ‰í•œ êµ¬ì—­ì´ ì§€ë¢°ì˜€ë‹¤ë©´ false ë¦¬í„´, ì•„ë‹ˆë¼ë©´ true ë¦¬í„´
 bool IsSafetyArea(int curX, int curY)
 {
     if (board[curX][curY] == 1)
@@ -67,7 +53,7 @@ bool IsSafetyArea(int curX, int curY)
     return true;
 }
 
-// ¾ÈÀü±¸¿ª ÁÖº¯¿¡ ÀÖ´Â Áö·Ú °³¼ö¸¦ Å½»öÇÏ°í Ç¥±âÇÏ´Â ÇÔ¼ö
+// ì•ˆì „êµ¬ì—­ ì£¼ë³€ì— ìˆëŠ” ì§€ë¢° ê°œìˆ˜ë¥¼ íƒìƒ‰í•˜ê³  í‘œê¸°í•˜ëŠ” í•¨ìˆ˜
 char CountMine(int x, int y)
 {
     int count = 0;
@@ -86,10 +72,10 @@ char CountMine(int x, int y)
     return ret;
 }
 
-// Áö·ÚÃ£±â ¸ŞÀÎ ÇÔ¼ö
+// ì§€ë¢°ì°¾ê¸° ë©”ì¸ í•¨ìˆ˜
 int MineSweeper(int boardLen, int Mines)
 {
-    // ¼±¾ğÇÑ Àü¿ªº¯¼ö¿¡ °ª ÃÊ±âÈ­ÇÏ±â
+    // ì„ ì–¸í•œ ì „ì—­ë³€ìˆ˜ì— ê°’ ì´ˆê¸°í™”í•˜ê¸°
     boardSize = boardLen;
     MineCount = Mines;
     Ground = boardSize * boardSize - MineCount;
@@ -97,55 +83,55 @@ int MineSweeper(int boardLen, int Mines)
     board = vector<vector<int>>(boardSize, vector<int>(boardSize, 0));
     check = vector<vector<bool>>(boardSize, vector<bool>(boardSize, false));
 
-    // °ÔÀÓÀ» ½ÃÀÛÇÏ±â Àü Áö·Ú¼³Ä¡ÇÏ±â
+    // ê²Œì„ì„ ì‹œì‘í•˜ê¸° ì „ ì§€ë¢°ì„¤ì¹˜í•˜ê¸°
     setMine(MineCount);
 
-    // Áö·ÚÃ£±â Ã¢ÀÇ Å©±â ¼³Á¤°ú ±¸¿ª ÇÑÄ­ÀÇ Å©±â Á¤ÇÏ±â
-    const int cellSize = 40; // °¢ Ä­ÀÇ ÇÈ¼¿ Å©±â
+    // ì§€ë¢°ì°¾ê¸° ì°½ì˜ í¬ê¸° ì„¤ì •ê³¼ êµ¬ì—­ í•œì¹¸ì˜ í¬ê¸° ì •í•˜ê¸°
+    const int cellSize = 40; // ê° ì¹¸ì˜ í”½ì…€ í¬ê¸°
     const int screenWidth = boardSize * cellSize;
     const int screenHeight = boardSize * cellSize + 60;
 
     InitWindow(screenWidth, screenHeight, "Mine Sweeper");
 
-    char MCount[100] = ""; // ³²Àº Áö·Ú °¹¼ö
-    char GCount[100] = ""; // ³²Àº ¾ÈÀü±¸¿ª °¹¼ö
+    char MCount[100] = ""; // ë‚¨ì€ ì§€ë¢° ê°¯ìˆ˜
+    char GCount[100] = ""; // ë‚¨ì€ ì•ˆì „êµ¬ì—­ ê°¯ìˆ˜
 
-    bool ReTry = true; // ½ÇÆĞÇßÀ» ¶§ ´Ù½Ã ½ÃµµÇÒ°ÇÁö ¹°¾îº¸´Â º¯¼ö
+    bool ReTry = true; // ì‹¤íŒ¨í–ˆì„ ë•Œ ë‹¤ì‹œ ì‹œë„í• ê±´ì§€ ë¬¼ì–´ë³´ëŠ” ë³€ìˆ˜
 
     while (!WindowShouldClose() && ReTry)
     {
         Vector2 mouse = GetMousePosition();
-        // °ÔÀÓÀÌ ½Â¸®·Î ³¡³ªÁö ¾Ê¾ÒÀ» ¶§
+        // ê²Œì„ì´ ìŠ¹ë¦¬ë¡œ ëë‚˜ì§€ ì•Šì•˜ì„ ë•Œ
         if (!(MineCount == 0 && Ground == 0) && flag)
         {
-            // ¸¶¿ì½º ¿ŞÂÊ¹öÆ°À» ´©¸£¸é ÇØ´ç ±¸¿ªÀÌ ¾ÈÀü±¸¿ªÀÎÁö È®ÀÎÇÏ´Â Á¶°Ç¹®
+            // ë§ˆìš°ìŠ¤ ì™¼ìª½ë²„íŠ¼ì„ ëˆ„ë¥´ë©´ í•´ë‹¹ êµ¬ì—­ì´ ì•ˆì „êµ¬ì—­ì¸ì§€ í™•ì¸í•˜ëŠ” ì¡°ê±´ë¬¸
             if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
             {
                 int mx = mouse.x / cellSize;
                 int my = (mouse.y - 60) / cellSize;
                 if (mx >= 0 && mx < boardSize && my >= 0 && my < boardSize)
                 {
-                    if (!IsSafetyArea(mx, my)) // Ã¹ Å½»öÀÌ Áö·Ú¿´´Ù¸é
-                        flag = false; // °ÔÀÓ ÆĞ¹è
+                    if (!IsSafetyArea(mx, my)) // ì²« íƒìƒ‰ì´ ì§€ë¢°ì˜€ë‹¤ë©´
+                        flag = false; // ê²Œì„ íŒ¨ë°°
                 }
             }
-            // ¿À¸¥ÂÊ ¿À¸¥ÂÊ Å¬¸¯À» ÇÑ´Ù¸é ÇØ´ç ±¸¿ª¿¡ !°¡ ÀÖ´Ù¸é ¾ø¾Ö°í ¾ø´Ù¸é »ı±â°Ô ÇÏ´Â Á¶°Ç¹®
+            // ì˜¤ë¥¸ìª½ ì˜¤ë¥¸ìª½ í´ë¦­ì„ í•œë‹¤ë©´ í•´ë‹¹ êµ¬ì—­ì— !ê°€ ìˆë‹¤ë©´ ì—†ì• ê³  ì—†ë‹¤ë©´ ìƒê¸°ê²Œ í•˜ëŠ” ì¡°ê±´ë¬¸
             else if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
             {
                 int mx = mouse.x / cellSize;
                 int my = (mouse.y - 60) / cellSize;
                 if (board[mx][my] != 2 && mx >= 0 && mx < boardSize && my >= 0 && my < boardSize)
                 {
-                    // ÇØ´ç ±¸¿ª¿¡ !°¡ ÀÖ´Ù¸é
+                    // í•´ë‹¹ êµ¬ì—­ì— !ê°€ ìˆë‹¤ë©´
                     if (check[mx][my] == true)
                     {
-                        check[mx][my] = false; // !¸¦ ¾ø¾Ö°í
-                        MineCount++; // Ã£¾Æ¾ßÇÒ Áö·Ú Áõ°¡
+                        check[mx][my] = false; // !ë¥¼ ì—†ì• ê³ 
+                        MineCount++; // ì°¾ì•„ì•¼í•  ì§€ë¢° ì¦ê°€
                     }
-                    else // !°¡ ¾ø´Ù¸é
+                    else // !ê°€ ì—†ë‹¤ë©´
                     {
-                        check[mx][my] = true; // !¸¦ Ãß°¡ÇÏ°í
-                        MineCount--; // Ã£¾Æ¾ßÇÒ Áö·Ú °¨¼Ò
+                        check[mx][my] = true; // !ë¥¼ ì¶”ê°€í•˜ê³ 
+                        MineCount--; // ì°¾ì•„ì•¼í•  ì§€ë¢° ê°ì†Œ
                     }
                 }
             }
@@ -154,7 +140,7 @@ int MineSweeper(int boardLen, int Mines)
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
-        // Á¤¼ö¸¦ ¹®ÀÚ¿­·Î ¹Ù²Ù±â À§ÇÑ stringstream ¼±¾ğ
+        // ì •ìˆ˜ë¥¼ ë¬¸ìì—´ë¡œ ë°”ê¾¸ê¸° ìœ„í•œ stringstream ì„ ì–¸
         stringstream ss;
         ss << MineCount;
         ss >> MCount;
@@ -171,7 +157,7 @@ int MineSweeper(int boardLen, int Mines)
                 int x = i * cellSize;
                 int y = j * cellSize + 60;
 
-                // ¸¶¿ì½º°¡ ÀÌ Ä­ À§¿¡ ÀÖ´ÂÁö È®ÀÎ
+                // ë§ˆìš°ìŠ¤ê°€ ì´ ì¹¸ ìœ„ì— ìˆëŠ”ì§€ í™•ì¸
                 bool mouseOver = (mouse.x >= x && mouse.x < x + cellSize &&
                     mouse.y >= y && mouse.y < y + cellSize);
 
@@ -179,42 +165,42 @@ int MineSweeper(int boardLen, int Mines)
                 Color color = mouseOver ? BLACK : LIGHTGRAY;
                 color = flag ? color : LIGHTGRAY;
 
-                // ÇØ´ç ±¸¿ªÀÌ ¾ÈÀü±¸¿ªÀÌ¶ó¸é
+                // í•´ë‹¹ êµ¬ì—­ì´ ì•ˆì „êµ¬ì—­ì´ë¼ë©´
                 if (board[i][j] == 2)
                 {
-                    char count[2] = " "; // ÀÏ´Ü ºóÄ­À¸·Î Ã¤¿ì°í
-                    count[0] = CountMine(i, j); // ÁÖº¯¿¡ Áö·Ú °³¼ö¸¦ Ã£°í ÀÖ´Ù¸é »ğÀÔ
-                    DrawRectangle(x, y, cellSize, cellSize, GRAY); //È¸»ö Á¤»ç°¢Çü Ä­¿¡
-                    DrawText(count, x + 15, y, 40, BLACK); // ÁÖº¯ Áö·Ú °³¼ö¸¦ ³Ö´Â´Ù
+                    char count[2] = " "; // ì¼ë‹¨ ë¹ˆì¹¸ìœ¼ë¡œ ì±„ìš°ê³ 
+                    count[0] = CountMine(i, j); // ì£¼ë³€ì— ì§€ë¢° ê°œìˆ˜ë¥¼ ì°¾ê³  ìˆë‹¤ë©´ ì‚½ì…
+                    DrawRectangle(x, y, cellSize, cellSize, GRAY); //íšŒìƒ‰ ì •ì‚¬ê°í˜• ì¹¸ì—
+                    DrawText(count, x + 15, y, 40, BLACK); // ì£¼ë³€ ì§€ë¢° ê°œìˆ˜ë¥¼ ë„£ëŠ”ë‹¤
                 }
-                // ÇØ´ç ±¸¿ªÀÌ Áö·ÚÀÌ¸ç °ÔÀÓ ÆĞ¹è¸¦ Çß´Ù¸é
+                // í•´ë‹¹ êµ¬ì—­ì´ ì§€ë¢°ì´ë©° ê²Œì„ íŒ¨ë°°ë¥¼ í–ˆë‹¤ë©´
                 else if (board[i][j] == 1 && !flag)
                 {
-                    DrawRectangle(x, y, cellSize, cellSize, RED); // ÇØ´ç ±¸¿ªÀ» »¡°£»öÀ¸·Î Ã³¸®ÇÏ°í
-                    DrawText("ReTry : R", screenWidth/4 , screenHeight/2-50, 40, GREEN); // ´Ù½Ã ½ÃµµÇÒ°ÇÁö?
-                    DrawText("Exit : ESC", screenWidth / 4, screenHeight/2+50, 40, GREEN); // ¾Æ´Ï¸é Á¾·áÇÒ°ÇÁö?
-                    if (IsKeyPressed(KEY_ESCAPE)) // Å° ÀÔ·ÂÀ¸·Î °áÁ¤ÇÑ´Ù. ESC¸¦ ´©¸£¸é Á¾·á
+                    DrawRectangle(x, y, cellSize, cellSize, RED); // í•´ë‹¹ êµ¬ì—­ì„ ë¹¨ê°„ìƒ‰ìœ¼ë¡œ ì²˜ë¦¬í•˜ê³ 
+                    DrawText("ReTry : R", screenWidth/4 , screenHeight/2-50, 40, GREEN); // ë‹¤ì‹œ ì‹œë„í• ê±´ì§€?
+                    DrawText("Exit : ESC", screenWidth / 4, screenHeight/2+50, 40, GREEN); // ì•„ë‹ˆë©´ ì¢…ë£Œí• ê±´ì§€?
+                    if (IsKeyPressed(KEY_ESCAPE)) // í‚¤ ì…ë ¥ìœ¼ë¡œ ê²°ì •í•œë‹¤. ESCë¥¼ ëˆ„ë¥´ë©´ ì¢…ë£Œ
                         ReTry = false;
-                    else if (IsKeyPressed(KEY_R)) // RÀ» ´©¸£¸é Àç½Ãµµ
+                    else if (IsKeyPressed(KEY_R)) // Rì„ ëˆ„ë¥´ë©´ ì¬ì‹œë„
                     {
                         EndDrawing();
                         CloseWindow();
                         MineSweeper(boardLen, Mines);
                     }
-                    // ¾Æ¹« °æ¿ì°¡ ¾Æ´Ñ °æ¿ì °è¼Ó Ç¥½Ã
+                    // ì•„ë¬´ ê²½ìš°ê°€ ì•„ë‹Œ ê²½ìš° ê³„ì† í‘œì‹œ
                 } 
-                // ÇØ´ç ±¸¿ªÀÌ Áö·ÚÀÌ°í °ÔÀÓ ½Â¸®¸é
+                // í•´ë‹¹ êµ¬ì—­ì´ ì§€ë¢°ì´ê³  ê²Œì„ ìŠ¹ë¦¬ë©´
                 else if (board[i][j] == 1 && MineCount == 0 && Ground == 0)
-                    DrawRectangle(x, y, cellSize, cellSize, GREEN); // ÃÊ·Ï»öÀ¸·Î Ã³¸®
-                else if (check[i][j] == true) // ÇØ´ç ±¸¿ª¿¡ ¾ÈÀü±¸¿ªÀÌ¶ó°í »ı°¢µÈ´Ù¸é
+                    DrawRectangle(x, y, cellSize, cellSize, GREEN); // ì´ˆë¡ìƒ‰ìœ¼ë¡œ ì²˜ë¦¬
+                else if (check[i][j] == true) // í•´ë‹¹ êµ¬ì—­ì— ì•ˆì „êµ¬ì—­ì´ë¼ê³  ìƒê°ëœë‹¤ë©´
                 {
-                    DrawRectangle(x, y, cellSize, cellSize, LIGHTGRAY); // ¹àÀº È¸»öÀ¸·Î Ä­À» Ã¤¿ì°í
-                    DrawText("!", x + 17, y + 2, 40, BLACK); // !¸¦ ³Ö´Â´Ù
+                    DrawRectangle(x, y, cellSize, cellSize, LIGHTGRAY); // ë°ì€ íšŒìƒ‰ìœ¼ë¡œ ì¹¸ì„ ì±„ìš°ê³ 
+                    DrawText("!", x + 17, y + 2, 40, BLACK); // !ë¥¼ ë„£ëŠ”ë‹¤
                 }
-                // ¸ğµç °æ¿ì°¡ ¾Æ´Ï¶ó¸é ¾ÆÁ÷ È®ÀÎÇÏÁö ¾ÊÀº ±¸¿ªÀÌ¹Ç·Î
+                // ëª¨ë“  ê²½ìš°ê°€ ì•„ë‹ˆë¼ë©´ ì•„ì§ í™•ì¸í•˜ì§€ ì•Šì€ êµ¬ì—­ì´ë¯€ë¡œ
                 else 
-                    DrawRectangle(x, y, cellSize, cellSize, color); // color º¯¼öÀÇ »ö»óÀ» ³Ö´Â´Ù
-                DrawRectangleLines(x, y, cellSize, cellSize, DARKGRAY); // Áö·Ú°ÔÀÓ º¸µåÆÇ °æ°è¼±
+                    DrawRectangle(x, y, cellSize, cellSize, color); // color ë³€ìˆ˜ì˜ ìƒ‰ìƒì„ ë„£ëŠ”ë‹¤
+                DrawRectangleLines(x, y, cellSize, cellSize, DARKGRAY); // ì§€ë¢°ê²Œì„ ë³´ë“œíŒ ê²½ê³„ì„ 
             }
         }
         EndDrawing();
